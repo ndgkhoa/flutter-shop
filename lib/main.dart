@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_application_1/controllers/mainscreen_provider.dart';
+import 'package:provider/provider.dart';
 import 'views/ui/mainscreen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => MainScreenNotifier())
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MainScreen(), // Set MainScreen as the home widget
+      home: MainScreen(),
     );
   }
 }
