@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/controllers/mainscreen_provider.dart';
-import 'package:flutter_application_1/views/shared/bottom-nav-widget.dart';
+import 'package:flutter_application_1/views/shared/bottom_nav_widget.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 
