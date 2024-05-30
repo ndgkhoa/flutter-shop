@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/controllers/mainscreen_provider.dart';
+import 'package:flutter_application_1/views/ui/mainscreen.dart';
 import 'package:provider/provider.dart';
-import 'views/ui/mainscreen.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
