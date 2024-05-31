@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/views/shared/appstyle.dart';
 import 'package:ionicons/ionicons.dart';
 
-class ProductCart extends StatefulWidget {
-  const ProductCart(
+class ProductCard extends StatefulWidget {
+  const ProductCard(
       {super.key,
       required this.price,
       required this.category,
@@ -18,10 +18,10 @@ class ProductCart extends StatefulWidget {
   final String image;
 
   @override
-  State<ProductCart> createState() => _ProductCartState();
+  State<ProductCard> createState() => _ProductCardState();
 }
 
-class _ProductCartState extends State<ProductCart> {
+class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
     bool selected = true;
@@ -101,6 +101,7 @@ class _ProductCartState extends State<ProductCart> {
                             selected: selected,
                             visualDensity: VisualDensity.compact,
                             selectedColor: Colors.black,
+                            shape: const CircleBorder(),
                           )
                         ],
                       )

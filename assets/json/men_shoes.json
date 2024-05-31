@@ -1,0 +1,22 @@
+[
+    {
+        "id":"0",
+        "name":"Nike supper vippro",
+        "category":"Men Running",
+        "imageUrl":[
+            "https://bizweb.dktcdn.net/100/464/163/products/image-1664897223649.png?v=1692797262633",
+            "https://d326fntlu7tb1e.cloudfront.net/uploads/58282ea3-b815-4d26-9f4f-382aa62f67cf-HP5404_a1.webp"
+        ],
+        "oldPrice":"1899.00",
+        "sizes":[
+            {"size":"6.0","isSelected":false},
+            {"size":"7.0","isSelected":false},
+            {"size":"8.0","isSelected":false},
+            {"size":"9.0","isSelected":false},
+            {"size":"9.5","isSelected":false}
+        ],
+        "price":"79.00",
+        "description":"Put some pep in your",
+        "title":"Adidas Running Shoes With Cooling Ventilations"
+    }
+]
