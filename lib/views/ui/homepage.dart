@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/models/sneaker_model.dart';
 import 'package:flutter_application_1/services/helper.dart';
 import 'package:flutter_application_1/views/shared/home_widget.dart';
@@ -73,7 +70,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         style: appstyleWithHt(
                             42, Colors.white, FontWeight.bold, 1.2),
                       ),
-                      SizedBox(height: 10), // Adjust the height as needed
                       TabBar(
                         padding: EdgeInsets.zero,
                         indicatorSize: TabBarIndicatorSize.label,
