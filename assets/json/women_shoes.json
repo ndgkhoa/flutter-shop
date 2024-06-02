@@ -2,16 +2,13 @@
     {
         "id":"0",
         "name":"Adidas X Speedflow.3",
-        "category":"Men Running",
+        "category":"Women Running",
         "imageUrl":[
             "https://bizweb.dktcdn.net/100/464/163/products/image-1666274322858-1666279839521.png?v=1666280470013",
             "https://d326fntlu7tb1e.cloudfront.net/uploads/58282ea3-b815-4d26-9f4f-382aa62f67cf-HP5404_a1.webp"
         ],
         "oldPrice":"1899.00",
         "sizes":[
-            {"size":"6.0","isSelected":false},
-            {"size":"7.0","isSelected":false},
-            {"size":"8.0","isSelected":false},
             {"size":"9.0","isSelected":false},
             {"size":"9.5","isSelected":false}
         ],

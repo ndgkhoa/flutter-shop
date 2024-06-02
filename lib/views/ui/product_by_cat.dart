@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/models/sneaker_model.dart';
 import 'package:flutter_application_1/services/helper.dart';
 import 'package:flutter_application_1/views/shared/appstyle.dart';
@@ -11,7 +8,9 @@ import 'package:flutter_application_1/views/shared/lastest_shoes.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 class ProductByCat extends StatefulWidget {
-  const ProductByCat({super.key});
+  const ProductByCat({super.key, required this.tabIndex});
+
+  final int tabIndex;
 
   @override
   State<ProductByCat> createState() => _ProductByCatState();
@@ -19,8 +18,7 @@ class ProductByCat extends StatefulWidget {
 
 class _ProductByCatState extends State<ProductByCat>
     with TickerProviderStateMixin {
-  late final TabController _tabController =
-      TabController(length: 3, vsync: this);
+  late final TabController _tabController;
 
   late Future<List<Sneakers>> _male;
   late Future<List<Sneakers>> _female;
@@ -44,6 +42,8 @@ class _ProductByCatState extends State<ProductByCat>
     getMale();
     getFemale();
     getKids();
+    _tabController =
+        TabController(length: 3, vsync: this, initialIndex: widget.tabIndex);
   }
 
   List<String> brand = [

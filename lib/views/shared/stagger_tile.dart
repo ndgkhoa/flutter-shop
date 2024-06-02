@@ -32,8 +32,7 @@ class _StaggerTileState extends State<StaggerTile> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                    top: 25), // Add padding to the top of the image
+                padding: const EdgeInsets.only(top: 25),
                 child: CachedNetworkImage(
                   imageUrl: widget.imageUrl,
                   fit: BoxFit.fill,
