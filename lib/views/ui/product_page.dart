@@ -365,23 +365,17 @@ class _ProductPageState extends State<ProductPage> {
                                                                     'isSelected'],
                                                                 onSelected:
                                                                     (newState) {
-                                                                  if (productNotifier
-                                                                      .sizes
-                                                                      .contains(
-                                                                          sizes[
-                                                                              'size'])) {
-                                                                    productNotifier
-                                                                        .sizes
-                                                                        .remove(
-                                                                            sizes['size']);
-                                                                  } else {
+                                                                  if (newState) {
                                                                     productNotifier
                                                                         .sizes
                                                                         .add(sizes[
                                                                             'size']);
+                                                                  } else {
+                                                                    productNotifier
+                                                                        .sizes
+                                                                        .remove(
+                                                                            sizes['size']);
                                                                   }
-                                                                  print(productNotifier
-                                                                      .sizes);
                                                                   productNotifier
                                                                       .toggleCheck(
                                                                           index);
@@ -429,13 +423,19 @@ class _ProductPageState extends State<ProductPage> {
                                                       Alignment.bottomCenter,
                                                   child: CheckoutButton(
                                                     onTap: () async {
+                                                      List<String> sizesCopy =
+                                                          List.from(
+                                                              productNotifier
+                                                                  .sizes);
+
+                                                      //await _cartBox.clear();
+
                                                       _createCart({
                                                         "id": sneaker.id,
                                                         "name": sneaker.name,
                                                         "category":
                                                             sneaker.category,
-                                                        "sizes": productNotifier
-                                                            .sizes,
+                                                        "sizes": sizesCopy,
                                                         "imageUrl":
                                                             sneaker.imageUrl,
                                                         "price": sneaker.price,

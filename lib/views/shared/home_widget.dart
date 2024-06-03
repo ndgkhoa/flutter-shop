@@ -31,7 +31,7 @@ class HomeWidget extends StatelessWidget {
               future: _male,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text("Errer ${snapshot.error}");
                 } else {
@@ -107,7 +107,7 @@ class HomeWidget extends StatelessWidget {
               future: _male,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text("Errer ${snapshot.error}");
                 } else {
