@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/controllers/mainscreen_provider.dart';
 import 'package:flutter_application_1/views/shared/bottom_nav.dart';
 import 'package:flutter_application_1/views/ui/cartpage.dart';
+import 'package:flutter_application_1/views/ui/favorites.dart';
 import 'package:flutter_application_1/views/ui/homepage.dart';
 import 'package:flutter_application_1/views/ui/profile.dart';
 import 'package:flutter_application_1/views/ui/searchpage.dart';
@@ -12,11 +13,11 @@ class MainScreen extends StatelessWidget {
   MainScreen({super.key});
 
   List<Widget> pageList = [
-    HomePage(),
-    SearchPage(),
-    HomePage(),
+    const HomePage(),
+    const SearchPage(),
+    const Favorites(),
     CartPage(),
-    ProfilePage(),
+    const ProfilePage(),
   ];
 
   @override

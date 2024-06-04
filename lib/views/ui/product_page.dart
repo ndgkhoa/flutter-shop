@@ -2,11 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_application_1/controllers/favorites_provider.dart';
 import 'package:flutter_application_1/controllers/product_provider.dart';
+import 'package:flutter_application_1/models/constants.dart';
 import 'package:flutter_application_1/models/sneaker_model.dart';
 import 'package:flutter_application_1/services/helper.dart';
 import 'package:flutter_application_1/views/shared/appstyle.dart';
 import 'package:flutter_application_1/views/shared/checkout_btn.dart';
+import 'package:flutter_application_1/views/ui/favorites.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -25,6 +28,7 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   final PageController pageController = PageController();
   final _cartBox = Hive.box('cart_box');
+  final _favBox = Hive.box('fav_box');
 
   late Future<Sneakers> _sneaker;
 
@@ -36,6 +40,26 @@ class _ProductPageState extends State<ProductPage> {
     } else {
       _sneaker = Helper().getKidsSneakersById(widget.id);
     }
+  }
+
+  Future<void> _createFav(Map<String, dynamic> addFav) async {
+    await _favBox.add(addFav);
+    getFavorites();
+  }
+
+  getFavorites() {
+    final favData = _favBox.keys.map((key) {
+      final item = _favBox.get(key);
+      return {
+        "key": key,
+        "id": item['id'],
+      };
+    }).toList();
+
+    favor = favData.toList();
+
+    ids = favor.map((item) => item['id']).toList();
+    setState(() {});
   }
 
   Future<void> _createCart(Map<String, dynamic> newCart) async {
@@ -131,9 +155,41 @@ class _ProductPageState extends State<ProductPage> {
                                                       .height *
                                                   0.1,
                                               right: 20,
-                                              child: const Icon(
-                                                AntDesign.hearto,
-                                                color: Colors.grey,
+                                              child:
+                                                  Consumer<FavoritesNotifier>(
+                                                builder: (context,
+                                                    favoritesNotifier, child) {
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      if (ids.contains(
+                                                          widget.id)) {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const Favorites()));
+                                                      } else {
+                                                        _createFav({
+                                                          "id": sneaker.id,
+                                                          "name": sneaker.name,
+                                                          "category":
+                                                              sneaker.category,
+                                                          "price":
+                                                              sneaker.price,
+                                                          "imageUrl": sneaker
+                                                              .imageUrl[0],
+                                                        });
+                                                      }
+                                                    },
+                                                    child: ids.contains(
+                                                            sneaker.id)
+                                                        ? const Icon(
+                                                            AntDesign.heart)
+                                                        : const Icon(
+                                                            AntDesign.hearto),
+                                                  );
+                                                },
                                               )),
                                           Positioned(
                                               bottom: 0,
@@ -427,9 +483,6 @@ class _ProductPageState extends State<ProductPage> {
                                                           List.from(
                                                               productNotifier
                                                                   .sizes);
-
-                                                      //await _cartBox.clear();
-
                                                       _createCart({
                                                         "id": sneaker.id,
                                                         "name": sneaker.name,

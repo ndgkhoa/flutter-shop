@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/constants.dart';
 import 'package:flutter_application_1/views/shared/appstyle.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:flutter_application_1/views/ui/favorites.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class ProductCard extends StatefulWidget {
   const ProductCard(
@@ -22,6 +25,28 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
+  final _favBox = Hive.box('fav_box');
+
+  Future<void> _createFav(Map<String, dynamic> addFav) async {
+    await _favBox.add(addFav);
+    getFavorites();
+  }
+
+  getFavorites() {
+    final favData = _favBox.keys.map((key) {
+      final item = _favBox.get(key);
+      return {
+        "key": key,
+        "id": item['id'],
+      };
+    }).toList();
+
+    favor = favData.toList();
+
+    ids = favor.map((item) => item['id']).toList();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     bool selected = true;
@@ -54,8 +79,25 @@ class _ProductCardState extends State<ProductCard> {
                     right: 10,
                     top: 10,
                     child: GestureDetector(
-                      onTap: null,
-                      child: const Icon(Ionicons.heart_outline),
+                      onTap: () async {
+                        if (ids.contains(widget.id)) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Favorites()));
+                        } else {
+                          _createFav({
+                            "id": widget.id,
+                            "name": widget.name,
+                            "category": widget.category,
+                            "price": widget.price,
+                            "imageUrl": widget.image
+                          });
+                        }
+                      },
+                      child: ids.contains(widget.id)
+                          ? const Icon(AntDesign.heart)
+                          : const Icon(AntDesign.hearto),
                     ),
                   ),
                 ],
@@ -92,9 +134,6 @@ class _ProductCardState extends State<ProductCard> {
                           Text(
                             "Colors",
                             style: appstyle(18, Colors.grey, FontWeight.w500),
-                          ),
-                          const SizedBox(
-                            width: 5,
                           ),
                           ChoiceChip(
                             label: const Text(" "),

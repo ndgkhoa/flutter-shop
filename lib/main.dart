@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/controllers/favorites_provider.dart';
 import 'package:flutter_application_1/controllers/mainscreen_provider.dart';
 import 'package:flutter_application_1/controllers/product_provider.dart';
 import 'package:flutter_application_1/views/ui/mainscreen.dart';
@@ -14,6 +15,7 @@ void main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => MainScreenNotifier()),
     ChangeNotifierProvider(create: (context) => ProductNotifier()),
+    ChangeNotifierProvider(create: (context) => FavoritesNotifier()),
   ], child: const MyApp()));
 }
 
