@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/sneaker_model.dart';
-import 'package:flutter_application_1/services/helper.dart';
+import 'package:flutter_application_1/controllers/product_provider.dart';
 import 'package:flutter_application_1/views/shared/appstyle.dart';
 import 'package:flutter_application_1/views/shared/category_btn.dart';
 import 'package:flutter_application_1/views/shared/custom_spacer.dart';
 import 'package:flutter_application_1/views/shared/lastest_shoes.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:provider/provider.dart';
 
 class ProductByCat extends StatefulWidget {
   const ProductByCat({super.key, required this.tabIndex});
@@ -20,28 +20,9 @@ class _ProductByCatState extends State<ProductByCat>
     with TickerProviderStateMixin {
   late final TabController _tabController;
 
-  late Future<List<Sneakers>> _male;
-  late Future<List<Sneakers>> _female;
-  late Future<List<Sneakers>> _kids;
-
-  void getMale() {
-    _male = Helper().getMaleSneakers();
-  }
-
-  void getFemale() {
-    _female = Helper().getFemaleSneakers();
-  }
-
-  void getKids() {
-    _kids = Helper().getKidsSneakers();
-  }
-
   @override
   void initState() {
     super.initState();
-    getMale();
-    getFemale();
-    getKids();
     _tabController =
         TabController(length: 3, vsync: this, initialIndex: widget.tabIndex);
   }
@@ -55,6 +36,10 @@ class _ProductByCatState extends State<ProductByCat>
 
   @override
   Widget build(BuildContext context) {
+    var productNotifier = Provider.of<ProductNotifier>(context);
+    productNotifier.getMale();
+    productNotifier.getFemale();
+    productNotifier.getKids();
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 199, 194, 194),
       body: SizedBox(
@@ -134,9 +119,9 @@ class _ProductByCatState extends State<ProductByCat>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    lastestShoes(male: _male),
-                    lastestShoes(male: _female),
-                    lastestShoes(male: _kids),
+                    lastestShoes(male: productNotifier.male),
+                    lastestShoes(male: productNotifier.female),
+                    lastestShoes(male: productNotifier.kids),
                   ],
                 ),
               ),

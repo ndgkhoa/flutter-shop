@@ -2,18 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_application_1/controllers/cart_provider.dart';
 import 'package:flutter_application_1/controllers/favorites_provider.dart';
 import 'package:flutter_application_1/controllers/product_provider.dart';
-import 'package:flutter_application_1/models/constants.dart';
 import 'package:flutter_application_1/models/sneaker_model.dart';
-import 'package:flutter_application_1/services/helper.dart';
 import 'package:flutter_application_1/views/shared/appstyle.dart';
 import 'package:flutter_application_1/views/shared/checkout_btn.dart';
 import 'package:flutter_application_1/views/ui/favorites.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.id, required this.category});
@@ -27,56 +25,18 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   final PageController pageController = PageController();
-  final _cartBox = Hive.box('cart_box');
-  final _favBox = Hive.box('fav_box');
-
-  late Future<Sneakers> _sneaker;
-
-  void getShoes() {
-    if (widget.category == "Men Running") {
-      _sneaker = Helper().getMaleSneakersById(widget.id);
-    } else if (widget.category == "Women Running") {
-      _sneaker = Helper().getFemaleSneakersById(widget.id);
-    } else {
-      _sneaker = Helper().getKidsSneakersById(widget.id);
-    }
-  }
-
-  Future<void> _createFav(Map<String, dynamic> addFav) async {
-    await _favBox.add(addFav);
-    getFavorites();
-  }
-
-  getFavorites() {
-    final favData = _favBox.keys.map((key) {
-      final item = _favBox.get(key);
-      return {
-        "key": key,
-        "id": item['id'],
-      };
-    }).toList();
-
-    favor = favData.toList();
-
-    ids = favor.map((item) => item['id']).toList();
-    setState(() {});
-  }
-
-  Future<void> _createCart(Map<String, dynamic> newCart) async {
-    await _cartBox.add(newCart);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getShoes();
-  }
 
   @override
   Widget build(BuildContext context) {
+    var productProvider = Provider.of<ProductNotifier>(context);
+    productProvider.getShoes(widget.category, widget.id);
+    var favoritesNotifier =
+        Provider.of<FavoritesNotifier>(context, listen: true);
+    favoritesNotifier.getFavorites();
+    var cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
         body: FutureBuilder<Sneakers>(
-            future: _sneaker,
+            future: productProvider.sneaker,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
@@ -161,8 +121,9 @@ class _ProductPageState extends State<ProductPage> {
                                                     favoritesNotifier, child) {
                                                   return GestureDetector(
                                                     onTap: () {
-                                                      if (ids.contains(
-                                                          widget.id)) {
+                                                      if (favoritesNotifier.ids
+                                                          .contains(
+                                                              widget.id)) {
                                                         Navigator.push(
                                                             context,
                                                             MaterialPageRoute(
@@ -170,7 +131,8 @@ class _ProductPageState extends State<ProductPage> {
                                                                     (context) =>
                                                                         const Favorites()));
                                                       } else {
-                                                        _createFav({
+                                                        favoritesNotifier
+                                                            .createFav({
                                                           "id": sneaker.id,
                                                           "name": sneaker.name,
                                                           "category":
@@ -181,9 +143,11 @@ class _ProductPageState extends State<ProductPage> {
                                                               .imageUrl[0],
                                                         });
                                                       }
+                                                      setState(() {});
                                                     },
-                                                    child: ids.contains(
-                                                            sneaker.id)
+                                                    child: favoritesNotifier.ids
+                                                            .contains(
+                                                                sneaker.id)
                                                         ? const Icon(
                                                             AntDesign.heart)
                                                         : const Icon(
@@ -483,7 +447,7 @@ class _ProductPageState extends State<ProductPage> {
                                                           List.from(
                                                               productNotifier
                                                                   .sizes);
-                                                      _createCart({
+                                                      cartProvider.createCart({
                                                         "id": sneaker.id,
                                                         "name": sneaker.name,
                                                         "category":

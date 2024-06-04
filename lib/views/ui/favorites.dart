@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/constants.dart';
+import 'package:flutter_application_1/controllers/favorites_provider.dart';
 import 'package:flutter_application_1/views/shared/appstyle.dart';
 import 'package:flutter_application_1/views/ui/mainscreen.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 
 class Favorites extends StatefulWidget {
   const Favorites({super.key});
@@ -14,27 +14,11 @@ class Favorites extends StatefulWidget {
 }
 
 class _FavoritesState extends State<Favorites> {
-  final _favBox = Hive.box('fav_box');
-
-  _deleteFav(int key) async {
-    await _favBox.delete(key);
-  }
-
   @override
   Widget build(BuildContext context) {
-    List<dynamic> fav = [];
-    final favData = _favBox.keys.map((key) {
-      final item = _favBox.get(key);
-      return {
-        "key": key,
-        "id": item['id'],
-        "name": item['name'],
-        "category": item['category'],
-        "price": item['price'],
-        "imageUrl": item['imageUrl'],
-      };
-    }).toList();
-    fav = favData.reversed.toList();
+    var favoritesNotifier =
+        Provider.of<FavoritesNotifier>(context, listen: true);
+    favoritesNotifier.getAllData();
     return Scaffold(
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -58,10 +42,10 @@ class _FavoritesState extends State<Favorites> {
             Padding(
               padding: EdgeInsets.all(8),
               child: ListView.builder(
-                  itemCount: fav.length,
+                  itemCount: favoritesNotifier.fav.length,
                   padding: const EdgeInsets.only(top: 100),
                   itemBuilder: (BuildContext context, int index) {
-                    final shoe = fav[index];
+                    final shoe = favoritesNotifier.fav[index];
                     return Padding(
                       padding: EdgeInsets.all(8),
                       child: ClipRRect(
@@ -136,8 +120,8 @@ class _FavoritesState extends State<Favorites> {
                                 padding: EdgeInsets.all(8),
                                 child: GestureDetector(
                                   onTap: () {
-                                    _deleteFav(shoe['key']);
-                                    ids.removeWhere(
+                                    favoritesNotifier.deleteFav(shoe['key']);
+                                    favoritesNotifier.ids.removeWhere(
                                         (element) => element == shoe['id']);
                                     Navigator.push(
                                         context,

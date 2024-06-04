@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/sneaker_model.dart';
-import 'package:flutter_application_1/services/helper.dart';
+import 'package:flutter_application_1/controllers/favorites_provider.dart';
+import 'package:flutter_application_1/controllers/product_provider.dart';
 import 'package:flutter_application_1/views/shared/home_widget.dart';
 import 'package:flutter_application_1/views/shared/appstyle.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,32 +16,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late final TabController _tabController =
       TabController(length: 3, vsync: this);
 
-  late Future<List<Sneakers>> _male;
-  late Future<List<Sneakers>> _female;
-  late Future<List<Sneakers>> _kids;
-
-  void getMale() {
-    _male = Helper().getMaleSneakers();
-  }
-
-  void getFemale() {
-    _female = Helper().getFemaleSneakers();
-  }
-
-  void getKids() {
-    _kids = Helper().getKidsSneakers();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getMale();
-    getFemale();
-    getKids();
-  }
-
   @override
   Widget build(BuildContext context) {
+    var productNotifier = Provider.of<ProductNotifier>(context);
+    productNotifier.getMale();
+    productNotifier.getFemale();
+    productNotifier.getKids();
+
+    //var favoritesNotifier = Provider.of<FavoritesNotifier>(context);
     return Scaffold(
         backgroundColor: Color.fromARGB(255, 199, 194, 194),
         body: SizedBox(
@@ -102,15 +85,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   padding: const EdgeInsets.only(left: 12),
                   child: TabBarView(controller: _tabController, children: [
                     HomeWidget(
-                      male: _male,
+                      male: productNotifier.male,
                       tabIndex: 0,
                     ),
                     HomeWidget(
-                      male: _female,
+                      male: productNotifier.female,
                       tabIndex: 1,
                     ),
                     HomeWidget(
-                      male: _kids,
+                      male: productNotifier.kids,
                       tabIndex: 2,
                     ),
                   ]),
