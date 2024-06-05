@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/controllers/favorites_provider.dart';
 import 'package:flutter_application_1/views/shared/appstyle.dart';
+import 'package:flutter_application_1/views/shared/reuseable_text.dart';
 import 'package:flutter_application_1/views/ui/favorites.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 
@@ -32,12 +34,12 @@ class _ProductCardState extends State<ProductCard> {
     favoritesNotifier.getFavorites();
     bool selected = true;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 0, 20, 0),
+      padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 0),
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(16)),
         child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width * 0.6,
+          height: 325.h,
+          width: 225.w,
           decoration: const BoxDecoration(boxShadow: [
             BoxShadow(
                 color: Colors.white,
@@ -51,14 +53,14 @@ class _ProductCardState extends State<ProductCard> {
               Stack(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.23,
+                    height: 186.h,
                     decoration: BoxDecoration(
                         image:
                             DecorationImage(image: NetworkImage(widget.image))),
                   ),
                   Positioned(
-                    right: 10,
-                    top: 10,
+                    right: 10.w,
+                    top: 10.h,
                     child: GestureDetector(
                       onTap: () async {
                         if (favoritesNotifier.ids.contains(widget.id)) {
@@ -85,17 +87,17 @@ class _ProductCardState extends State<ProductCard> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 8),
+                padding: EdgeInsets.only(left: 8.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.name,
+                    reuseableText(
+                      text: widget.name,
                       style: appstyleWithHt(
-                          36, Colors.black, FontWeight.bold, 1.1),
+                          34, Colors.black, FontWeight.bold, 1.1),
                     ),
-                    Text(
-                      widget.category,
+                    reuseableText(
+                      text: widget.category,
                       style:
                           appstyleWithHt(18, Colors.grey, FontWeight.bold, 1.5),
                     ),
@@ -103,22 +105,22 @@ class _ProductCardState extends State<ProductCard> {
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        widget.price,
-                        style: appstyle(30, Colors.black, FontWeight.w600),
+                      reuseableText(
+                        text: widget.price,
+                        style: appstyle(28, Colors.black, FontWeight.w600),
                       ),
                       Row(
                         children: [
-                          Text(
-                            "Colors",
+                          reuseableText(
+                            text: "Colors",
                             style: appstyle(18, Colors.grey, FontWeight.w500),
                           ),
                           ChoiceChip(
-                            label: const Text(" "),
+                            label: const Text(""),
                             selected: selected,
                             visualDensity: VisualDensity.compact,
                             selectedColor: Colors.black,

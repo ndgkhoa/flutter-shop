@@ -1,12 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/controllers/mainscreen_provider.dart';
-import 'package:flutter_application_1/views/shared/bottom_nav.dart';
-import 'package:flutter_application_1/views/ui/cartpage.dart';
-import 'package:flutter_application_1/views/ui/favorites.dart';
-import 'package:flutter_application_1/views/ui/homepage.dart';
-import 'package:flutter_application_1/views/ui/profile.dart';
-import 'package:flutter_application_1/views/ui/searchpage.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_application_1/views/shared/export.dart';
+import 'package:flutter_application_1/views/shared/export_packages.dart';
 
 // ignore: must_be_immutable
 class MainScreen extends StatelessWidget {

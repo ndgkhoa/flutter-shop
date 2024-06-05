@@ -1,11 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/controllers/product_provider.dart';
-import 'package:flutter_application_1/views/shared/appstyle.dart';
-import 'package:flutter_application_1/views/shared/category_btn.dart';
-import 'package:flutter_application_1/views/shared/custom_spacer.dart';
-import 'package:flutter_application_1/views/shared/lastest_shoes.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_application_1/views/shared/export.dart';
+import 'package:flutter_application_1/views/shared/export_packages.dart';
 
 class ProductByCat extends StatefulWidget {
   const ProductByCat({super.key, required this.tabIndex});
@@ -41,14 +35,14 @@ class _ProductByCatState extends State<ProductByCat>
     productNotifier.getFemale();
     productNotifier.getKids();
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 199, 194, 194),
+      backgroundColor: const Color.fromARGB(255, 199, 194, 194),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Stack(
           children: [
             Container(
-              padding: const EdgeInsets.fromLTRB(16, 45, 0, 0),
-              height: MediaQuery.of(context).size.height * 0.4,
+              padding: EdgeInsets.fromLTRB(16.w, 45.h, 0, 0),
+              height: 325.h,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/images/1.jpg"),
@@ -59,7 +53,7 @@ class _ProductByCatState extends State<ProductByCat>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.fromLTRB(6, 12, 16, 18),
+                    padding: EdgeInsets.fromLTRB(6.w, 12.h, 16.w, 18.h),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -67,7 +61,7 @@ class _ProductByCatState extends State<ProductByCat>
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child: Icon(
+                          child: const Icon(
                             AntDesign.close,
                             color: Colors.white,
                           ),
@@ -76,7 +70,7 @@ class _ProductByCatState extends State<ProductByCat>
                           onTap: () {
                             filter();
                           },
-                          child: Icon(
+                          child: const Icon(
                             FontAwesome.sliders,
                             color: Colors.white,
                           ),
@@ -88,7 +82,9 @@ class _ProductByCatState extends State<ProductByCat>
                     padding: EdgeInsets.zero,
                     indicatorSize: TabBarIndicatorSize.label,
                     indicatorColor: Colors.transparent,
+                    dividerColor: Colors.transparent,
                     controller: _tabController,
+                    tabAlignment: TabAlignment.start,
                     isScrollable: true,
                     labelColor: Colors.white,
                     labelStyle: appstyle(24, Colors.white, FontWeight.bold),
@@ -110,9 +106,9 @@ class _ProductByCatState extends State<ProductByCat>
             ),
             Padding(
               padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.175,
-                left: 16,
-                right: 12,
+                top: 150.h,
+                left: 16.w,
+                right: 12.w,
               ),
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -142,7 +138,7 @@ class _ProductByCatState extends State<ProductByCat>
         builder: (context) => Container(
             height: MediaQuery.of(context).size.height * 0.84,
             width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(25),
@@ -150,13 +146,13 @@ class _ProductByCatState extends State<ProductByCat>
                 )),
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
                   height: 5,
                   width: 40,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                     color: Colors.black38,
                   ),
@@ -175,10 +171,10 @@ class _ProductByCatState extends State<ProductByCat>
                           "Gender",
                           style: appstyle(20, Colors.black, FontWeight.bold),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        Row(children: const [
+                        const Row(children: [
                           CategoryBtn(
                             label: "Men",
                             buttonClr: Colors.black,
@@ -192,7 +188,7 @@ class _ProductByCatState extends State<ProductByCat>
                             buttonClr: Colors.grey,
                           ),
                         ]),
-                        CustomSpacer(),
+                        const CustomSpacer(),
                         Text(
                           "Category",
                           style: appstyle(20, Colors.black, FontWeight.w600),
@@ -200,8 +196,8 @@ class _ProductByCatState extends State<ProductByCat>
                         const SizedBox(
                           height: 20,
                         ),
-                        Row(
-                          children: const [
+                        const Row(
+                          children: [
                             CategoryBtn(
                               label: "Shoes",
                               buttonClr: Colors.black,
@@ -232,7 +228,7 @@ class _ProductByCatState extends State<ProductByCat>
                             label: _value.toString(),
                             secondaryTrackValue: 200,
                             onChanged: (double value) {}),
-                        CustomSpacer(),
+                        const CustomSpacer(),
                         Text(
                           "Brand",
                           style: appstyle(20, Colors.black, FontWeight.bold),
@@ -241,18 +237,18 @@ class _ProductByCatState extends State<ProductByCat>
                           height: 20,
                         ),
                         Container(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           height: 80,
                           child: ListView.builder(
                             itemCount: brand.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
                               return Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: Container(
                                   decoration: BoxDecoration(
                                       color: Colors.grey.shade200,
-                                      borderRadius: BorderRadius.all(
+                                      borderRadius: const BorderRadius.all(
                                           Radius.circular(12))),
                                   child: Image.asset(
                                     brand[index],

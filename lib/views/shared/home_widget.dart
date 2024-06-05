@@ -5,8 +5,10 @@ import 'package:flutter_application_1/models/sneaker_model.dart';
 import 'package:flutter_application_1/views/shared/appstyle.dart';
 import 'package:flutter_application_1/views/shared/new_shoes.dart';
 import 'package:flutter_application_1/views/shared/product_card.dart';
+import 'package:flutter_application_1/views/shared/reuseable_text.dart';
 import 'package:flutter_application_1/views/ui/product_by_cat.dart';
 import 'package:flutter_application_1/views/ui/product_page.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +28,7 @@ class HomeWidget extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.405,
+          height: 325.h,
           child: FutureBuilder<List<Sneakers>>(
               future: _male,
               builder: (context, snapshot) {
@@ -66,12 +68,12 @@ class HomeWidget extends StatelessWidget {
         Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(12, 20, 12, 20),
+              padding: EdgeInsets.fromLTRB(12.w, 20.h, 12.w, 20.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Lastest Shoes",
+                  reuseableText(
+                    text: "Lastest Shoes",
                     style: appstyle(24, Colors.black, FontWeight.bold),
                   ),
                   GestureDetector(
@@ -85,13 +87,13 @@ class HomeWidget extends StatelessWidget {
                     },
                     child: Row(
                       children: [
-                        Text(
-                          "Show all",
+                        reuseableText(
+                          text: "Show all",
                           style: appstyle(22, Colors.black, FontWeight.w500),
                         ),
-                        const Icon(
+                        Icon(
                           AntDesign.caretright,
-                          size: 20,
+                          size: 20.h,
                         )
                       ],
                     ),
@@ -102,7 +104,7 @@ class HomeWidget extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.13,
+          height: 105.h,
           child: FutureBuilder<List<Sneakers>>(
               future: _male,
               builder: (context, snapshot) {
@@ -118,8 +120,16 @@ class HomeWidget extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final shoe = snapshot.data![index];
                       return Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0.h),
                         child: NewShoes(
+                          onTap: () {
+                            productNotifier.shoeSizes = shoe.sizes;
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProductPage(
+                                        id: shoe.id, category: shoe.category)));
+                          },
                           imageUrl: shoe.imageUrl[0],
                         ),
                       );

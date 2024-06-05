@@ -1,13 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_application_1/controllers/cart_provider.dart';
-import 'package:flutter_application_1/views/shared/appstyle.dart';
-import 'package:flutter_application_1/views/shared/checkout_btn.dart';
-import 'package:flutter_application_1/views/ui/mainscreen.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_application_1/views/shared/export.dart';
+import 'package:flutter_application_1/views/shared/export_packages.dart';
 
 class CartPage extends StatefulWidget {
   CartPage({super.key});
@@ -84,8 +76,8 @@ class _CartPageState extends State<CartPage> {
                               ],
                             ),
                             child: Container(
-                              height: MediaQuery.of(context).size.height * 0.11,
-                              width: MediaQuery.of(context).size.width,
+                              height: 93.h,
+                              width: 375.w,
                               decoration: BoxDecoration(
                                 color: Colors.grey.shade100,
                                 boxShadow: [
@@ -114,7 +106,7 @@ class _CartPageState extends State<CartPage> {
                                         ),
                                       ),
                                       Positioned(
-                                        bottom: -2,
+                                        bottom: -4,
                                         child: GestureDetector(
                                           onTap: () {
                                             cartProvider

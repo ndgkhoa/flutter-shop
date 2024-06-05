@@ -1,9 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/controllers/favorites_provider.dart';
-import 'package:flutter_application_1/controllers/product_provider.dart';
-import 'package:flutter_application_1/views/shared/home_widget.dart';
-import 'package:flutter_application_1/views/shared/appstyle.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_application_1/views/shared/export.dart';
+import 'package:flutter_application_1/views/shared/export_packages.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,29 +23,30 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Scaffold(
         backgroundColor: Color.fromARGB(255, 199, 194, 194),
         body: SizedBox(
-          height: MediaQuery.of(context).size.height,
+          height: 812.h,
+          width: 375.w,
           child: Stack(
             children: [
               Container(
-                padding: const EdgeInsets.fromLTRB(16, 45, 0, 0),
-                height: MediaQuery.of(context).size.height * 0.4,
+                padding: EdgeInsets.fromLTRB(16.w, 45.h, 0, 0),
+                height: 325.h,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/images/1.jpg"),
                         fit: BoxFit.fill)),
                 child: Container(
-                  padding: const EdgeInsets.only(left: 8, bottom: 15),
-                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.only(left: 8.w, bottom: 15.h),
+                  width: 375.h,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Athletics Shoes",
+                      reuseableText(
+                        text: "Athletics Shoes",
                         style: appstyleWithHt(
                             42, Colors.white, FontWeight.bold, 1.5),
                       ),
-                      Text(
-                        "Collection",
+                      reuseableText(
+                        text: "Collection",
                         style: appstyleWithHt(
                             42, Colors.white, FontWeight.bold, 1.2),
                       ),
@@ -57,7 +54,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         padding: EdgeInsets.zero,
                         indicatorSize: TabBarIndicatorSize.label,
                         indicatorColor: Colors.transparent,
+                        dividerColor: Colors.transparent,
                         controller: _tabController,
+                        tabAlignment: TabAlignment.start,
                         isScrollable: true,
                         labelColor: Colors.white,
                         labelStyle: appstyle(24, Colors.white, FontWeight.bold),
@@ -79,10 +78,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.265),
+                padding: EdgeInsets.only(top: 220.h),
                 child: Container(
-                  padding: const EdgeInsets.only(left: 12),
+                  padding: EdgeInsets.only(left: 12.w),
                   child: TabBarView(controller: _tabController, children: [
                     HomeWidget(
                       male: productNotifier.male,

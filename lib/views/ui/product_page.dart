@@ -1,17 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_application_1/controllers/cart_provider.dart';
-import 'package:flutter_application_1/controllers/favorites_provider.dart';
-import 'package:flutter_application_1/controllers/product_provider.dart';
-import 'package:flutter_application_1/models/sneaker_model.dart';
-import 'package:flutter_application_1/views/shared/appstyle.dart';
-import 'package:flutter_application_1/views/shared/checkout_btn.dart';
-import 'package:flutter_application_1/views/ui/favorites.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_application_1/views/shared/export.dart';
+import 'package:flutter_application_1/views/shared/export_packages.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.id, required this.category});
@@ -52,7 +40,7 @@ class _ProductPageState extends State<ProductPage> {
                           automaticallyImplyLeading: false,
                           leadingWidth: 0,
                           title: Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
+                              padding: EdgeInsets.only(bottom: 10.h),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -82,9 +70,8 @@ class _ProductPageState extends State<ProductPage> {
                             background: Stack(
                               children: [
                                 SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.5,
-                                  width: MediaQuery.of(context).size.width,
+                                  height: 400.h,
+                                  width: 375.w,
                                   child: PageView.builder(
                                     scrollDirection: Axis.horizontal,
                                     itemCount: sneaker!.imageUrl.length,
@@ -96,13 +83,8 @@ class _ProductPageState extends State<ProductPage> {
                                       return Stack(
                                         children: [
                                           Container(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.39,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
+                                              height: 316.h,
+                                              width: 375.w,
                                               color: Colors.grey.shade300,
                                               child: CachedNetworkImage(
                                                 imageUrl:
@@ -110,11 +92,8 @@ class _ProductPageState extends State<ProductPage> {
                                                 fit: BoxFit.contain,
                                               )),
                                           Positioned(
-                                              top: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.1,
-                                              right: 20,
+                                              top: 98.h,
+                                              right: 20.w,
                                               child:
                                                   Consumer<FavoritesNotifier>(
                                                 builder: (context,
@@ -193,282 +172,260 @@ class _ProductPageState extends State<ProductPage> {
                                   ),
                                 ),
                                 Positioned(
-                                    bottom: 30,
-                                    child: ClipRRect(
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(30),
-                                        topRight: Radius.circular(30),
-                                      ),
-                                      child: Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
+                                  bottom: 30,
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(30),
+                                      topRight: Radius.circular(30),
+                                    ),
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
                                               0.62,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          color: Colors.white,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(12),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                      width: MediaQuery.of(context).size.width,
+                                      color: Colors.white,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(12),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              sneaker.name,
+                                              style: appstyle(32, Colors.black,
+                                                  FontWeight.bold),
+                                            ),
+                                            Row(
                                               children: [
-                                                Text(
-                                                  sneaker.name,
-                                                  style: appstyle(
-                                                      40,
-                                                      Colors.black,
-                                                      FontWeight.bold),
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text(sneaker.category,
-                                                        style: appstyle(
-                                                            20,
-                                                            Colors.grey,
-                                                            FontWeight.bold)),
-                                                    const SizedBox(
-                                                      width: 20,
-                                                    ),
-                                                    RatingBar.builder(
-                                                      initialRating: 4,
-                                                      minRating: 1,
-                                                      direction:
-                                                          Axis.horizontal,
-                                                      allowHalfRating: true,
-                                                      itemCount: 5,
-                                                      itemSize: 22,
-                                                      itemPadding:
-                                                          const EdgeInsets
-                                                              .symmetric(
-                                                              horizontal: 1),
-                                                      itemBuilder: (context,
-                                                              _) =>
-                                                          const Icon(Icons.star,
-                                                              size: 18,
-                                                              color:
-                                                                  Colors.black),
-                                                      onRatingUpdate:
-                                                          (rating) {},
-                                                    )
-                                                  ],
-                                                ),
+                                                Text(sneaker.category,
+                                                    style: appstyle(
+                                                        20,
+                                                        Colors.grey,
+                                                        FontWeight.bold)),
                                                 const SizedBox(
-                                                  height: 20,
+                                                  width: 20,
                                                 ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text("\$${sneaker.price}",
-                                                        style: appstyle(
-                                                            26,
-                                                            Colors.black,
-                                                            FontWeight.w600)),
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          "Colors",
-                                                          style: appstyle(
-                                                              26,
-                                                              Colors.black,
-                                                              FontWeight.w500),
-                                                        ),
-                                                        const SizedBox(
-                                                          width: 5,
-                                                        ),
-                                                        const CircleAvatar(
-                                                          radius: 7,
-                                                          backgroundColor:
-                                                              Colors.black,
-                                                        ),
-                                                        const SizedBox(
-                                                          width: 5,
-                                                        ),
-                                                        const CircleAvatar(
-                                                          radius: 7,
-                                                          backgroundColor:
-                                                              Colors.red,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  height: 20,
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          "Select sizes",
-                                                          style: appstyle(
-                                                              20,
-                                                              Colors.black,
-                                                              FontWeight.w600),
-                                                        ),
-                                                        const SizedBox(
-                                                          width: 20,
-                                                        ),
-                                                        Text(
-                                                          "View size guide",
-                                                          style: appstyle(
-                                                              20,
-                                                              Colors.grey,
-                                                              FontWeight.w600),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    SizedBox(
-                                                      height: 40,
-                                                      child: ListView.builder(
-                                                          itemCount:
-                                                              productNotifier
-                                                                  .shoeSizes
-                                                                  .length,
-                                                          scrollDirection:
-                                                              Axis.horizontal,
-                                                          padding:
-                                                              EdgeInsets.zero,
-                                                          itemBuilder:
-                                                              (conttext,
-                                                                  index) {
-                                                            final sizes =
-                                                                productNotifier
-                                                                        .shoeSizes[
-                                                                    index];
-                                                            return Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          8.0),
-                                                              child: ChoiceChip(
-                                                                shape:
-                                                                    RoundedRectangleBorder(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                60),
-                                                                        side:
-                                                                            const BorderSide(
-                                                                          color:
-                                                                              Colors.black,
-                                                                          width:
-                                                                              1,
-                                                                          style:
-                                                                              BorderStyle.solid,
-                                                                        )),
-                                                                disabledColor:
-                                                                    Colors
-                                                                        .white,
-                                                                label: Text(
-                                                                    sizes[
-                                                                        'size'],
-                                                                    style: appstyle(
-                                                                        18,
-                                                                        sizes['isSelected']
-                                                                            ? Colors
-                                                                                .white
-                                                                            : Colors
-                                                                                .black,
-                                                                        FontWeight
-                                                                            .w500)),
-                                                                selectedColor:
-                                                                    Colors
-                                                                        .black,
-                                                                selected: sizes[
-                                                                    'isSelected'],
-                                                                onSelected:
-                                                                    (newState) {
-                                                                  if (newState) {
-                                                                    productNotifier
-                                                                        .sizes
-                                                                        .add(sizes[
-                                                                            'size']);
-                                                                  } else {
-                                                                    productNotifier
-                                                                        .sizes
-                                                                        .remove(
-                                                                            sizes['size']);
-                                                                  }
-                                                                  productNotifier
-                                                                      .toggleCheck(
-                                                                          index);
-                                                                },
-                                                                checkmarkColor:
-                                                                    Colors
-                                                                        .white,
-                                                              ),
-                                                            );
-                                                          }),
-                                                    )
-                                                  ],
-                                                ),
-                                                SizedBox(height: 10),
-                                                const Divider(
-                                                  indent: 10,
-                                                  endIndent: 10,
-                                                  color: Colors.black,
-                                                ),
-                                                SizedBox(height: 10),
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.8,
-                                                  child: Text(sneaker.title,
-                                                      style: appstyle(
-                                                          26,
-                                                          Colors.black,
-                                                          FontWeight.w700)),
-                                                ),
-                                                SizedBox(height: 10),
-                                                Text(
-                                                  sneaker.description,
-                                                  textAlign: TextAlign.justify,
-                                                  maxLines: 4,
-                                                  style: appstyle(
-                                                      14,
-                                                      Colors.black,
-                                                      FontWeight.normal),
-                                                ),
-                                                SizedBox(height: 10),
-                                                Align(
-                                                  alignment:
-                                                      Alignment.bottomCenter,
-                                                  child: CheckoutButton(
-                                                    onTap: () async {
-                                                      List<String> sizesCopy =
-                                                          List.from(
-                                                              productNotifier
-                                                                  .sizes);
-                                                      cartProvider.createCart({
-                                                        "id": sneaker.id,
-                                                        "name": sneaker.name,
-                                                        "category":
-                                                            sneaker.category,
-                                                        "sizes": sizesCopy,
-                                                        "imageUrl":
-                                                            sneaker.imageUrl,
-                                                        "price": sneaker.price,
-                                                        "qty": 1,
-                                                      });
-                                                      productNotifier.sizes
-                                                          .clear();
-                                                      Navigator.pop(context);
-                                                    },
-                                                    label: "Add to Cart",
-                                                  ),
+                                                RatingBar.builder(
+                                                  initialRating: 4,
+                                                  minRating: 1,
+                                                  direction: Axis.horizontal,
+                                                  allowHalfRating: true,
+                                                  itemCount: 5,
+                                                  itemSize: 22,
+                                                  itemPadding: const EdgeInsets
+                                                      .symmetric(horizontal: 1),
+                                                  itemBuilder: (context, _) =>
+                                                      const Icon(Icons.star,
+                                                          size: 18,
+                                                          color: Colors.black),
+                                                  onRatingUpdate: (rating) {},
                                                 )
                                               ],
                                             ),
-                                          )),
-                                    ))
+                                            SizedBox(
+                                              height: 15.h,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text("\$${sneaker.price}",
+                                                    style: appstyle(
+                                                        26,
+                                                        Colors.black,
+                                                        FontWeight.w600)),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      "Colors",
+                                                      style: appstyle(
+                                                          18,
+                                                          Colors.grey,
+                                                          FontWeight.w500),
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    const CircleAvatar(
+                                                      radius: 7,
+                                                      backgroundColor:
+                                                          Colors.black,
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                    const CircleAvatar(
+                                                      radius: 7,
+                                                      backgroundColor:
+                                                          Colors.red,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 15.h,
+                                            ),
+                                            Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      "Select sizes",
+                                                      style: appstyle(
+                                                          20,
+                                                          Colors.black,
+                                                          FontWeight.w600),
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    Text(
+                                                      "View size guide",
+                                                      style: appstyle(
+                                                          20,
+                                                          Colors.grey,
+                                                          FontWeight.w600),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                SizedBox(
+                                                  height: 40,
+                                                  child: ListView.builder(
+                                                      itemCount: productNotifier
+                                                          .shoeSizes.length,
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      padding: EdgeInsets.zero,
+                                                      itemBuilder:
+                                                          (conttext, index) {
+                                                        final sizes =
+                                                            productNotifier
+                                                                    .shoeSizes[
+                                                                index];
+                                                        return Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal:
+                                                                      8.0),
+                                                          child: ChoiceChip(
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            60),
+                                                                    side:
+                                                                        const BorderSide(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      width: 1,
+                                                                      style: BorderStyle
+                                                                          .solid,
+                                                                    )),
+                                                            disabledColor:
+                                                                Colors.white,
+                                                            label: Text(
+                                                                sizes['size'],
+                                                                style: appstyle(
+                                                                    18,
+                                                                    sizes['isSelected']
+                                                                        ? Colors
+                                                                            .white
+                                                                        : Colors
+                                                                            .black,
+                                                                    FontWeight
+                                                                        .w500)),
+                                                            selectedColor:
+                                                                Colors.black,
+                                                            selected: sizes[
+                                                                'isSelected'],
+                                                            onSelected:
+                                                                (newState) {
+                                                              if (newState) {
+                                                                productNotifier
+                                                                    .sizes
+                                                                    .add(sizes[
+                                                                        'size']);
+                                                              } else {
+                                                                productNotifier
+                                                                    .sizes
+                                                                    .remove(sizes[
+                                                                        'size']);
+                                                              }
+                                                              productNotifier
+                                                                  .toggleCheck(
+                                                                      index);
+                                                            },
+                                                            checkmarkColor:
+                                                                Colors.white,
+                                                          ),
+                                                        );
+                                                      }),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(height: 5.h),
+                                            const Divider(
+                                              indent: 10,
+                                              endIndent: 10,
+                                              color: Colors.black,
+                                            ),
+                                            SizedBox(height: 5.h),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.8,
+                                              child: Text(sneaker.title,
+                                                  style: appstyle(
+                                                      22,
+                                                      Colors.black,
+                                                      FontWeight.w700)),
+                                            ),
+                                            SizedBox(height: 5.h),
+                                            Text(
+                                              sneaker.description,
+                                              textAlign: TextAlign.justify,
+                                              maxLines: 4,
+                                              style: appstyle(14, Colors.black,
+                                                  FontWeight.normal),
+                                            ),
+                                            SizedBox(height: 10.h),
+                                            Align(
+                                              alignment: Alignment.bottomCenter,
+                                              child: CheckoutButton(
+                                                onTap: () async {
+                                                  List<String> sizesCopy =
+                                                      List.from(productNotifier
+                                                          .sizes);
+                                                  cartProvider.createCart({
+                                                    "id": sneaker.id,
+                                                    "name": sneaker.name,
+                                                    "category":
+                                                        sneaker.category,
+                                                    "sizes": sizesCopy,
+                                                    "imageUrl":
+                                                        sneaker.imageUrl,
+                                                    "price": sneaker.price,
+                                                    "qty": 1,
+                                                  });
+                                                  productNotifier.sizes.clear();
+                                                  Navigator.pop(context);
+                                                },
+                                                label: "Add to Cart",
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
