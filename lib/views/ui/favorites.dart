@@ -15,6 +15,7 @@ class _FavoritesState extends State<Favorites> {
         Provider.of<FavoritesNotifier>(context, listen: true);
     favoritesNotifier.getAllData();
     return Scaffold(
+      backgroundColor: Color.fromARGB(223, 206, 205, 205),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -66,9 +67,9 @@ class _FavoritesState extends State<Favorites> {
                                     padding: EdgeInsets.all(12),
                                     child: CachedNetworkImage(
                                       imageUrl: shoe['imageUrl'],
-                                      width: 70,
-                                      height: 70,
-                                      fit: BoxFit.fill,
+                                      width: 70.h,
+                                      height: 70.h,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                   Padding(

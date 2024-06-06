@@ -35,7 +35,7 @@ class _StaggerTileState extends State<StaggerTile> {
             children: [
               CachedNetworkImage(
                 imageUrl: widget.imageUrl,
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
               Container(
                   padding: EdgeInsets.only(top: 12.h),

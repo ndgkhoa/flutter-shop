@@ -3,14 +3,14 @@ import 'package:flutter_application_1/models/sneaker_model.dart';
 import 'package:flutter_application_1/services/helper.dart';
 
 class ProductNotifier extends ChangeNotifier {
-  int _activepage = 0;
+  int _activePage = 0;
   List<dynamic> _shoeSizes = [];
   List<String> _sizes = [];
 
-  int get activepage => _activepage;
+  int get activePage => _activePage;
 
   set activePage(int newIndex) {
-    _activepage = newIndex;
+    _activePage = newIndex;
     notifyListeners();
   }
 
@@ -33,30 +33,30 @@ class ProductNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  late Future<List<Sneakers>> male;
-  late Future<List<Sneakers>> female;
-  late Future<List<Sneakers>> kids;
+  late Future<List<Sneakers>> nike;
+  late Future<List<Sneakers>> mizuno;
+  late Future<List<Sneakers>> adidas;
   late Future<Sneakers> sneaker;
 
-  void getMale() {
-    male = Helper().getMaleSneakers();
+  void getNike() {
+    nike = Helper().getNikeList();
   }
 
-  void getFemale() {
-    female = Helper().getFemaleSneakers();
+  void getMizuno() {
+    mizuno = Helper().getMizunoList();
   }
 
-  void getKids() {
-    kids = Helper().getKidsSneakers();
+  void getAdidas() {
+    adidas = Helper().getAdidasList();
   }
 
   void getShoes(String category, String id) {
-    if (category == "Men Running") {
-      sneaker = Helper().getMaleSneakersById(id);
-    } else if (category == "Women Running") {
-      sneaker = Helper().getFemaleSneakersById(id);
+    if (category == "Nike") {
+      sneaker = Helper().getNikeListById(id);
+    } else if (category == "Mizuno") {
+      sneaker = Helper().getMizunoListById(id);
     } else {
-      sneaker = Helper().getKidsSneakersById(id);
+      sneaker = Helper().getAdidasListById(id);
     }
   }
 }

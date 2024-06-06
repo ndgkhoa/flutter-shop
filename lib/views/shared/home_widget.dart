@@ -15,11 +15,11 @@ import 'package:provider/provider.dart';
 class HomeWidget extends StatelessWidget {
   const HomeWidget({
     super.key,
-    required Future<List<Sneakers>> male,
+    required Future<List<Sneakers>> cate,
     required this.tabIndex,
-  }) : _male = male;
+  }) : _cate = cate;
 
-  final Future<List<Sneakers>> _male;
+  final Future<List<Sneakers>> _cate;
   final int tabIndex;
 
   @override
@@ -30,16 +30,16 @@ class HomeWidget extends StatelessWidget {
         SizedBox(
           height: 325.h,
           child: FutureBuilder<List<Sneakers>>(
-              future: _male,
+              future: _cate,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text("Errer ${snapshot.error}");
                 } else {
-                  final male = snapshot.data;
+                  final list = snapshot.data;
                   return ListView.builder(
-                    itemCount: male!.length,
+                    itemCount: list!.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       final shoe = snapshot.data![index];
@@ -106,16 +106,16 @@ class HomeWidget extends StatelessWidget {
         SizedBox(
           height: 105.h,
           child: FutureBuilder<List<Sneakers>>(
-              future: _male,
+              future: _cate,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text("Errer ${snapshot.error}");
                 } else {
-                  final male = snapshot.data;
+                  final list = snapshot.data;
                   return ListView.builder(
-                    itemCount: male!.length,
+                    itemCount: list!.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       final shoe = snapshot.data![index];

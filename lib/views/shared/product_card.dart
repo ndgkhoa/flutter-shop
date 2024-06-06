@@ -54,9 +54,12 @@ class _ProductCardState extends State<ProductCard> {
                 children: [
                   Container(
                     height: 186.h,
+                    width: 225.w,
                     decoration: BoxDecoration(
-                        image:
-                            DecorationImage(image: NetworkImage(widget.image))),
+                        image: DecorationImage(
+                      image: NetworkImage(widget.image),
+                      fit: BoxFit.cover,
+                    )),
                   ),
                   Positioned(
                     right: 10.w,

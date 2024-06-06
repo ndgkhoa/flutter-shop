@@ -15,23 +15,30 @@ class NewShoes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: onTap,
-        child: Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(16.h)),
-              boxShadow: const [
-                BoxShadow(
-                    color: Colors.white,
-                    spreadRadius: 1,
-                    blurRadius: 0.8,
-                    offset: Offset(0, 1))
-              ]),
-          height: 100.h,
-          width: 104.w,
+      onTap: onTap,
+      child: Container(
+        // decoration: BoxDecoration(
+        //   color: Colors.white,
+        //   borderRadius: BorderRadius.all(Radius.circular(16.h)),
+        //   boxShadow: const [
+        //     BoxShadow(
+        //       color: Colors.white,
+        //       spreadRadius: 1,
+        //       blurRadius: 0.8,
+        //       offset: Offset(0, 1),
+        //     ),
+        //   ],
+        // ),
+        height: 100.h,
+        width: 104.w,
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(16.h)),
           child: CachedNetworkImage(
             imageUrl: imageUrl,
+            fit: BoxFit.cover, // Make the image cover the entire container
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

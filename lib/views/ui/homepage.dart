@@ -15,13 +15,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var productNotifier = Provider.of<ProductNotifier>(context);
-    productNotifier.getMale();
-    productNotifier.getFemale();
-    productNotifier.getKids();
+    productNotifier.getNike();
+    productNotifier.getMizuno();
+    productNotifier.getAdidas();
 
     //var favoritesNotifier = Provider.of<FavoritesNotifier>(context);
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 199, 194, 194),
+        backgroundColor: Color.fromARGB(223, 206, 205, 205),
         body: SizedBox(
           height: 812.h,
           width: 375.w,
@@ -63,13 +63,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         unselectedLabelColor: Colors.grey.withOpacity(0.3),
                         tabs: const [
                           Tab(
-                            child: Text("Men shoes"),
+                            child: Text("Nike"),
                           ),
                           Tab(
-                            child: Text("Women shoes"),
+                            child: Text("Mizuno"),
                           ),
                           Tab(
-                            child: Text("Kids shoes"),
+                            child: Text("Adidas"),
                           ),
                         ],
                       ),
@@ -83,15 +83,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   padding: EdgeInsets.only(left: 12.w),
                   child: TabBarView(controller: _tabController, children: [
                     HomeWidget(
-                      male: productNotifier.male,
+                      cate: productNotifier.nike,
                       tabIndex: 0,
                     ),
                     HomeWidget(
-                      male: productNotifier.female,
+                      cate: productNotifier.mizuno,
                       tabIndex: 1,
                     ),
                     HomeWidget(
-                      male: productNotifier.kids,
+                      cate: productNotifier.adidas,
                       tabIndex: 2,
                     ),
                   ]),

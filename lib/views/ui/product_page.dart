@@ -15,26 +15,36 @@ class _ProductPageState extends State<ProductPage> {
   final PageController pageController = PageController();
 
   @override
+  void initState() {
+    super.initState();
+    var productProvider = Provider.of<ProductNotifier>(context, listen: false);
+    productProvider.getShoes(widget.category, widget.id);
+  }
+
+  @override
   Widget build(BuildContext context) {
     var productProvider = Provider.of<ProductNotifier>(context);
-    productProvider.getShoes(widget.category, widget.id);
+    //productProvider.getShoes(widget.category, widget.id);
     var favoritesNotifier =
         Provider.of<FavoritesNotifier>(context, listen: true);
     favoritesNotifier.getFavorites();
     var cartProvider = Provider.of<CartProvider>(context);
+
     return Scaffold(
-        body: FutureBuilder<Sneakers>(
-            future: productProvider.sneaker,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return Text("Errer ${snapshot.error}");
-              } else {
-                final sneaker = snapshot.data;
-                return Consumer<ProductNotifier>(
-                  builder: (context, productNotifier, child) {
-                    return CustomScrollView(
+      body: FutureBuilder<Sneakers>(
+        future: productProvider.sneaker,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text("Error ${snapshot.error}"));
+          } else {
+            final sneaker = snapshot.data;
+            return Consumer<ProductNotifier>(
+              builder: (context, productNotifier, child) {
+                return Stack(
+                  children: [
+                    CustomScrollView(
                       slivers: [
                         SliverAppBar(
                           automaticallyImplyLeading: false,
@@ -83,89 +93,84 @@ class _ProductPageState extends State<ProductPage> {
                                       return Stack(
                                         children: [
                                           Container(
-                                              height: 316.h,
-                                              width: 375.w,
-                                              color: Colors.grey.shade300,
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    sneaker.imageUrl[index],
-                                                fit: BoxFit.contain,
-                                              )),
+                                            height: 330.h,
+                                            width: 375.w,
+                                            color: Colors.grey.shade300,
+                                            child: CachedNetworkImage(
+                                              imageUrl: sneaker.imageUrl[index],
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
                                           Positioned(
-                                              top: 98.h,
-                                              right: 20.w,
-                                              child:
-                                                  Consumer<FavoritesNotifier>(
-                                                builder: (context,
-                                                    favoritesNotifier, child) {
-                                                  return GestureDetector(
-                                                    onTap: () {
-                                                      if (favoritesNotifier.ids
-                                                          .contains(
-                                                              widget.id)) {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const Favorites()));
-                                                      } else {
-                                                        favoritesNotifier
-                                                            .createFav({
-                                                          "id": sneaker.id,
-                                                          "name": sneaker.name,
-                                                          "category":
-                                                              sneaker.category,
-                                                          "price":
-                                                              sneaker.price,
-                                                          "imageUrl": sneaker
-                                                              .imageUrl[0],
-                                                        });
-                                                      }
-                                                      setState(() {});
-                                                    },
-                                                    child: favoritesNotifier.ids
-                                                            .contains(
-                                                                sneaker.id)
-                                                        ? const Icon(
-                                                            AntDesign.heart)
-                                                        : const Icon(
-                                                            AntDesign.hearto),
-                                                  );
-                                                },
-                                              )),
+                                            top: 80.h,
+                                            right: 20.w,
+                                            child: Consumer<FavoritesNotifier>(
+                                              builder: (context,
+                                                  favoritesNotifier, child) {
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    if (favoritesNotifier.ids
+                                                        .contains(widget.id)) {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const Favorites(),
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      favoritesNotifier
+                                                          .createFav({
+                                                        "id": sneaker.id,
+                                                        "name": sneaker.name,
+                                                        "category":
+                                                            sneaker.category,
+                                                        "price": sneaker.price,
+                                                        "imageUrl":
+                                                            sneaker.imageUrl[0],
+                                                      });
+                                                    }
+                                                    setState(() {});
+                                                  },
+                                                  child: favoritesNotifier.ids
+                                                          .contains(sneaker.id)
+                                                      ? const Icon(
+                                                          AntDesign.heart)
+                                                      : const Icon(
+                                                          AntDesign.hearto),
+                                                );
+                                              },
+                                            ),
+                                          ),
                                           Positioned(
-                                              bottom: 0,
-                                              right: 0,
-                                              left: 0,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.3,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: List<Widget>.generate(
-                                                    sneaker.imageUrl.length,
-                                                    (index) => Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  horizontal:
-                                                                      4),
-                                                          child: CircleAvatar(
-                                                            radius: 5,
-                                                            backgroundColor:
-                                                                productNotifier
-                                                                            .activepage !=
-                                                                        index
-                                                                    ? Colors
-                                                                        .grey
-                                                                    : Colors
-                                                                        .black,
-                                                          ),
-                                                        )),
-                                              )),
+                                            bottom: 0,
+                                            right: 0,
+                                            left: 0,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.3,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: List<Widget>.generate(
+                                                sneaker.imageUrl.length,
+                                                (index) => Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(horizontal: 4),
+                                                  child: CircleAvatar(
+                                                    radius: 5,
+                                                    backgroundColor:
+                                                        productNotifier
+                                                                    .activePage !=
+                                                                index
+                                                            ? Colors.grey
+                                                            : Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       );
                                     },
@@ -230,7 +235,7 @@ class _ProductPageState extends State<ProductPage> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Text("\$${sneaker.price}",
+                                                Text("${sneaker.price} VND",
                                                     style: appstyle(
                                                         26,
                                                         Colors.black,
@@ -294,78 +299,83 @@ class _ProductPageState extends State<ProductPage> {
                                                   height: 10,
                                                 ),
                                                 SizedBox(
-                                                  height: 40,
+                                                  height: 40.h,
                                                   child: ListView.builder(
-                                                      itemCount: productNotifier
-                                                          .shoeSizes.length,
-                                                      scrollDirection:
-                                                          Axis.horizontal,
-                                                      padding: EdgeInsets.zero,
-                                                      itemBuilder:
-                                                          (conttext, index) {
-                                                        final sizes =
-                                                            productNotifier
-                                                                    .shoeSizes[
-                                                                index];
-                                                        return Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  horizontal:
-                                                                      8.0),
-                                                          child: ChoiceChip(
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            60),
-                                                                    side:
-                                                                        const BorderSide(
-                                                                      color: Colors
-                                                                          .black,
-                                                                      width: 1,
-                                                                      style: BorderStyle
-                                                                          .solid,
-                                                                    )),
-                                                            disabledColor:
-                                                                Colors.white,
-                                                            label: Text(
-                                                                sizes['size'],
-                                                                style: appstyle(
-                                                                    18,
-                                                                    sizes['isSelected']
-                                                                        ? Colors
-                                                                            .white
-                                                                        : Colors
-                                                                            .black,
-                                                                    FontWeight
-                                                                        .w500)),
-                                                            selectedColor:
-                                                                Colors.black,
-                                                            selected: sizes[
-                                                                'isSelected'],
-                                                            onSelected:
-                                                                (newState) {
-                                                              if (newState) {
-                                                                productNotifier
-                                                                    .sizes
-                                                                    .add(sizes[
-                                                                        'size']);
-                                                              } else {
-                                                                productNotifier
-                                                                    .sizes
-                                                                    .remove(sizes[
-                                                                        'size']);
-                                                              }
-                                                              productNotifier
-                                                                  .toggleCheck(
-                                                                      index);
-                                                            },
-                                                            checkmarkColor:
-                                                                Colors.white,
+                                                    itemCount: productNotifier
+                                                        .shoeSizes.length,
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    padding: EdgeInsets.zero,
+                                                    itemBuilder:
+                                                        (conttext, index) {
+                                                      final sizes =
+                                                          productNotifier
+                                                              .shoeSizes[index];
+                                                      return Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal:
+                                                                    8.0),
+                                                        child: ChoiceChip(
+                                                          key: ValueKey<String>(
+                                                              sizes[
+                                                                  'size']), // Provide a stable key
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        60),
+                                                            side:
+                                                                const BorderSide(
+                                                              color:
+                                                                  Colors.black,
+                                                              width: 1,
+                                                              style: BorderStyle
+                                                                  .solid,
+                                                            ),
                                                           ),
-                                                        );
-                                                      }),
+                                                          disabledColor:
+                                                              Colors.white,
+                                                          label: Text(
+                                                            sizes['size'],
+                                                            style: appstyle(
+                                                              18,
+                                                              sizes['isSelected']
+                                                                  ? Colors.white
+                                                                  : Colors
+                                                                      .black,
+                                                              FontWeight.w500,
+                                                            ),
+                                                          ),
+                                                          selectedColor:
+                                                              Colors.black,
+                                                          selected: sizes[
+                                                              'isSelected'],
+                                                          onSelected:
+                                                              (newState) {
+                                                            if (newState) {
+                                                              productNotifier
+                                                                  .sizes
+                                                                  .add(sizes[
+                                                                      'size']);
+                                                            } else {
+                                                              productNotifier
+                                                                  .sizes
+                                                                  .remove(sizes[
+                                                                      'size']);
+                                                            }
+                                                            productNotifier
+                                                                .toggleCheck(
+                                                                    index);
+                                                          },
+                                                          checkmarkColor:
+                                                              Colors.white,
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
                                                 )
                                               ],
                                             ),
@@ -391,35 +401,11 @@ class _ProductPageState extends State<ProductPage> {
                                             Text(
                                               sneaker.description,
                                               textAlign: TextAlign.justify,
-                                              maxLines: 4,
+                                              maxLines: 5,
                                               style: appstyle(14, Colors.black,
                                                   FontWeight.normal),
                                             ),
                                             SizedBox(height: 10.h),
-                                            Align(
-                                              alignment: Alignment.bottomCenter,
-                                              child: CheckoutButton(
-                                                onTap: () async {
-                                                  List<String> sizesCopy =
-                                                      List.from(productNotifier
-                                                          .sizes);
-                                                  cartProvider.createCart({
-                                                    "id": sneaker.id,
-                                                    "name": sneaker.name,
-                                                    "category":
-                                                        sneaker.category,
-                                                    "sizes": sizesCopy,
-                                                    "imageUrl":
-                                                        sneaker.imageUrl,
-                                                    "price": sneaker.price,
-                                                    "qty": 1,
-                                                  });
-                                                  productNotifier.sizes.clear();
-                                                  Navigator.pop(context);
-                                                },
-                                                label: "Add to Cart",
-                                              ),
-                                            )
                                           ],
                                         ),
                                       ),
@@ -429,12 +415,37 @@ class _ProductPageState extends State<ProductPage> {
                               ],
                             ),
                           ),
-                        )
+                        ),
                       ],
-                    );
-                  },
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: CheckoutButton(
+                        onTap: () async {
+                          List<String> sizesCopy =
+                              List.from(productNotifier.sizes);
+                          cartProvider.createCart({
+                            "id": sneaker.id,
+                            "name": sneaker.name,
+                            "category": sneaker.category,
+                            "sizes": sizesCopy,
+                            "imageUrl": sneaker.imageUrl,
+                            "price": sneaker.price,
+                            "qty": 1,
+                          });
+                          productNotifier.sizes.clear();
+                          Navigator.pop(context);
+                        },
+                        label: "Add to Cart",
+                      ),
+                    ),
+                  ],
                 );
-              }
-            }));
+              },
+            );
+          }
+        },
+      ),
+    );
   }
 }

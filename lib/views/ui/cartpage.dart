@@ -14,7 +14,7 @@ class _CartPageState extends State<CartPage> {
     var cartProvider = Provider.of<CartProvider>(context);
     cartProvider.getCart();
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 199, 194, 194),
+      backgroundColor: Color.fromARGB(223, 206, 205, 205),
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Stack(

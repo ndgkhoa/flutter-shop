@@ -31,11 +31,11 @@ class _ProductByCatState extends State<ProductByCat>
   @override
   Widget build(BuildContext context) {
     var productNotifier = Provider.of<ProductNotifier>(context);
-    productNotifier.getMale();
-    productNotifier.getFemale();
-    productNotifier.getKids();
+    productNotifier.getNike();
+    productNotifier.getMizuno();
+    productNotifier.getAdidas();
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 199, 194, 194),
+      backgroundColor: Color.fromARGB(223, 206, 205, 205),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Stack(
@@ -91,13 +91,13 @@ class _ProductByCatState extends State<ProductByCat>
                     unselectedLabelColor: Colors.grey.withOpacity(0.3),
                     tabs: const [
                       Tab(
-                        text: "Men shoes",
+                        text: "Nike",
                       ),
                       Tab(
-                        text: "Women shoes",
+                        text: "Mizuno",
                       ),
                       Tab(
-                        text: "Kids shoes",
+                        text: "Adidas",
                       ),
                     ],
                   ),
@@ -115,9 +115,9 @@ class _ProductByCatState extends State<ProductByCat>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    lastestShoes(male: productNotifier.male),
-                    lastestShoes(male: productNotifier.female),
-                    lastestShoes(male: productNotifier.kids),
+                    lastestShoes(cate: productNotifier.nike),
+                    lastestShoes(cate: productNotifier.mizuno),
+                    lastestShoes(cate: productNotifier.adidas),
                   ],
                 ),
               ),

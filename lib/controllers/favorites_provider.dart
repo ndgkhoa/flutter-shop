@@ -62,4 +62,10 @@ class FavoritesNotifier extends ChangeNotifier {
   Future<void> deleteFav(int key) async {
     await _favBox.delete(key);
   }
+
+  Future<void> deleteAllFav() async {
+    await _favBox.clear();
+    _fav.clear();
+    notifyListeners();
+  }
 }

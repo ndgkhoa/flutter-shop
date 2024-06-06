@@ -10,7 +10,6 @@ class MainScreen extends StatelessWidget {
     const SearchPage(),
     const Favorites(),
     CartPage(),
-    const ProfilePage(),
   ];
 
   @override
@@ -18,7 +17,7 @@ class MainScreen extends StatelessWidget {
     return Consumer<MainScreenNotifier>(
       builder: (context, mainScreenNotifier, child) {
         return Scaffold(
-          backgroundColor: Color.fromARGB(255, 199, 194, 194),
+          backgroundColor: Color.fromARGB(223, 235, 233, 233),
           body: pageList[mainScreenNotifier.pageIndex],
           bottomNavigationBar: const BottomNavBar(),
         );
