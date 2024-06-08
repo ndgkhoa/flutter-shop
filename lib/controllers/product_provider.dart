@@ -22,6 +22,7 @@ class ProductNotifier extends ChangeNotifier {
   }
 
   void toggleCheck(int index) {
+    Map<String, dynamic> sizeData = _shoeSizes[index];
     shoeSizes[index]['isSelected'] = !shoeSizes[index]['isSelected'];
     notifyListeners();
   }

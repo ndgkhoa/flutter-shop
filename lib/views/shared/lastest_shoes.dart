@@ -19,7 +19,7 @@ class lastestShoes extends StatelessWidget {
       future: _cate,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator.adaptive());
         } else if (snapshot.hasError) {
           return Center(child: Text("Error: ${snapshot.error}"));
         } else {
@@ -38,8 +38,7 @@ class lastestShoes extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ProductPage(
-                              id: shoe.id, category: shoe.category)));
+                          builder: (context) => ProductPage(sneakers: shoe)));
                 },
                 child: StaggerTile(
                   imageUrl: shoe.imageUrl[0],

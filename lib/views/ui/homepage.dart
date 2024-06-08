@@ -18,7 +18,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     productNotifier.getNike();
     productNotifier.getMizuno();
     productNotifier.getAdidas();
-
     //var favoritesNotifier = Provider.of<FavoritesNotifier>(context);
     return Scaffold(
         backgroundColor: Color.fromARGB(223, 206, 205, 205),

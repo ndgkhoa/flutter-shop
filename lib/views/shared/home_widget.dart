@@ -33,7 +33,8 @@ class HomeWidget extends StatelessWidget {
               future: _cate,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
                 } else if (snapshot.hasError) {
                   return Text("Errer ${snapshot.error}");
                 } else {
@@ -49,8 +50,8 @@ class HomeWidget extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ProductPage(
-                                      id: shoe.id, category: shoe.category)));
+                                  builder: (context) =>
+                                      ProductPage(sneakers: shoe)));
                         },
                         child: ProductCard(
                           price: "\$${shoe.price}",
@@ -109,7 +110,8 @@ class HomeWidget extends StatelessWidget {
               future: _cate,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
                 } else if (snapshot.hasError) {
                   return Text("Errer ${snapshot.error}");
                 } else {
@@ -127,8 +129,8 @@ class HomeWidget extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ProductPage(
-                                        id: shoe.id, category: shoe.category)));
+                                    builder: (context) =>
+                                        ProductPage(sneakers: shoe)));
                           },
                           imageUrl: shoe.imageUrl[0],
                         ),

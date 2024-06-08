@@ -1,6 +1,6 @@
 class Config {
-  static const apiUrl = "10.0.2.2:8000";
-  //static const apiUrl = "localhost:8000";
+  static const apiUrl = "172.19.1.55:8000";
+  //static const apiUrl = "10.0.2.2:8000";
   static const paymentBaseUrl = "stripeserver-production-28e7.up.railway.app";
   static const String loginUrl = "/api/login";
   static const String paymentUrl = "/stripe/create-checkout-session";
