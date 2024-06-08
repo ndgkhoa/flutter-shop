@@ -22,7 +22,6 @@ class ProductNotifier extends ChangeNotifier {
   }
 
   void toggleCheck(int index) {
-    Map<String, dynamic> sizeData = _shoeSizes[index];
     shoeSizes[index]['isSelected'] = !shoeSizes[index]['isSelected'];
     notifyListeners();
   }
@@ -49,15 +48,5 @@ class ProductNotifier extends ChangeNotifier {
 
   void getAdidas() {
     adidas = Helper().getAdidasList();
-  }
-
-  void getShoes(String category, String id) {
-    if (category == "Nike") {
-      sneaker = Helper().getNikeListById(id);
-    } else if (category == "Mizuno") {
-      sneaker = Helper().getMizunoListById(id);
-    } else {
-      sneaker = Helper().getAdidasListById(id);
-    }
   }
 }

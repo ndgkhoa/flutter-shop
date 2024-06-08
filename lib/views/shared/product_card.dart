@@ -112,15 +112,17 @@ class _ProductCardState extends State<ProductCard> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      reuseableText(
-                        text: widget.price,
-                        style: appstyle(28, Colors.black, FontWeight.w600),
+                      Flexible(
+                        child: reuseableText(
+                          text: widget.price,
+                          style: appstyle(28, Colors.black, FontWeight.w600),
+                        ),
                       ),
                       Row(
                         children: [
                           reuseableText(
                             text: "Colors",
-                            style: appstyle(18, Colors.grey, FontWeight.w500),
+                            style: appstyle(16, Colors.grey, FontWeight.w500),
                           ),
                           ChoiceChip(
                             label: const Text(""),

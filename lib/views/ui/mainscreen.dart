@@ -1,5 +1,6 @@
 import 'package:flutter_application_1/views/shared/export.dart';
 import 'package:flutter_application_1/views/shared/export_packages.dart';
+import 'package:flutter_application_1/views/ui/profile.dart';
 
 // ignore: must_be_immutable
 class MainScreen extends StatelessWidget {
@@ -9,7 +10,7 @@ class MainScreen extends StatelessWidget {
     const HomePage(),
     const SearchPage(),
     const Favorites(),
-    CartPage(),
+    const ProfilePage(),
   ];
 
   @override
@@ -17,7 +18,7 @@ class MainScreen extends StatelessWidget {
     return Consumer<MainScreenNotifier>(
       builder: (context, mainScreenNotifier, child) {
         return Scaffold(
-          backgroundColor: Color.fromARGB(223, 235, 233, 233),
+          backgroundColor: Color(0xFFE2E2E2),
           body: pageList[mainScreenNotifier.pageIndex],
           bottomNavigationBar: const BottomNavBar(),
         );

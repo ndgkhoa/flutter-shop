@@ -17,3 +17,4 @@ export 'package:flutter_application_1/views/ui/cartpage.dart';
 export 'package:flutter_application_1/views/ui/homepage.dart';
 export 'package:flutter_application_1/views/ui/profile.dart';
 export 'package:flutter_application_1/views/ui/searchpage.dart';
+export 'package:flutter_application_1/views/shared/custom_field.dart';

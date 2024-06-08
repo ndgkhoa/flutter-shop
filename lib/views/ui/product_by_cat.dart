@@ -35,7 +35,7 @@ class _ProductByCatState extends State<ProductByCat>
     productNotifier.getMizuno();
     productNotifier.getAdidas();
     return Scaffold(
-      backgroundColor: Color.fromARGB(223, 206, 205, 205),
+      backgroundColor: Color(0xFFE2E2E2),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Stack(
