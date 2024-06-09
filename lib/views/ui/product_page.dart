@@ -18,6 +18,7 @@ class _ProductPageState extends State<ProductPage> {
     var favoritesNotifier =
         Provider.of<FavoritesNotifier>(context, listen: true);
     favoritesNotifier.getFavorites();
+    var authNotifier = Provider.of<LoginNotifier>(context);
     var cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       body: Consumer<ProductNotifier>(
@@ -46,22 +47,31 @@ class _ProductPageState extends State<ProductPage> {
                             builder: (context, favoritesNotifier, child) {
                               return GestureDetector(
                                 onTap: () {
-                                  if (favoritesNotifier.ids
-                                      .contains(widget.sneakers.id)) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const Favorites(),
-                                      ),
-                                    );
+                                  if (authNotifier.loggedIn == true) {
+                                    if (favoritesNotifier.ids
+                                        .contains(widget.sneakers.id)) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const Favorites(),
+                                        ),
+                                      );
+                                    } else {
+                                      favoritesNotifier.createFav({
+                                        "id": widget.sneakers.id,
+                                        "name": widget.sneakers.name,
+                                        "category": widget.sneakers.category,
+                                        "price": widget.sneakers.price,
+                                        "imageUrl": widget.sneakers.imageUrl[0],
+                                      });
+                                    }
                                   } else {
-                                    favoritesNotifier.createFav({
-                                      "id": widget.sneakers.id,
-                                      "name": widget.sneakers.name,
-                                      "category": widget.sneakers.category,
-                                      "price": widget.sneakers.price,
-                                      "imageUrl": widget.sneakers.imageUrl[0],
-                                    });
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LoginPage()));
                                   }
                                   setState(() {});
                                 },
@@ -353,18 +363,14 @@ class _ProductPageState extends State<ProductPage> {
                 alignment: Alignment.bottomCenter,
                 child: CheckoutButton(
                   onTap: () async {
-                    List<String> sizesCopy = List.from(productNotifier.sizes);
-                    cartProvider.createCart({
-                      "id": widget.sneakers.id,
-                      "name": widget.sneakers.name,
-                      "category": widget.sneakers.category,
-                      "sizes": sizesCopy,
-                      "imageUrl": widget.sneakers.imageUrl,
-                      "price": widget.sneakers.price,
-                      "qty": 1,
-                    });
-                    productNotifier.sizes.clear();
-                    Navigator.pop(context);
+                    if (authNotifier.loggedIn == true) {
+                      print('object');
+                    } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()));
+                    }
                   },
                   label: "Add to Cart",
                 ),

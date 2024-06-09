@@ -6,3 +6,4 @@ export 'package:flutter_vector_icons/flutter_vector_icons.dart';
 export 'package:provider/provider.dart';
 export 'package:flutter_slidable/flutter_slidable.dart'
     hide ConfirmDismissCallback;
+export 'package:flutter_svg/flutter_svg.dart';

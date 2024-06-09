@@ -1,6 +1,5 @@
 import 'package:flutter_application_1/views/shared/export.dart';
 import 'package:flutter_application_1/views/shared/export_packages.dart';
-import 'package:flutter_application_1/views/ui/profile.dart';
 
 // ignore: must_be_immutable
 class MainScreen extends StatelessWidget {

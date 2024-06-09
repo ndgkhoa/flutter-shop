@@ -13,11 +13,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       TabController(length: 3, vsync: this);
 
   @override
+  void initState() {
+    super.initState();
+    var authtNotifier = Provider.of<LoginNotifier>(context, listen: false);
+    authtNotifier.getPrefs();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var productNotifier = Provider.of<ProductNotifier>(context);
     productNotifier.getNike();
     productNotifier.getMizuno();
     productNotifier.getAdidas();
+
     return Scaffold(
         backgroundColor: Color(0xFFE2E2E2),
         body: SizedBox(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/controllers/cart_provider.dart';
 import 'package:flutter_application_1/controllers/favorites_provider.dart';
+import 'package:flutter_application_1/controllers/login_provider.dart';
 import 'package:flutter_application_1/controllers/mainscreen_provider.dart';
 import 'package:flutter_application_1/controllers/product_provider.dart';
 import 'package:flutter_application_1/views/ui/mainscreen.dart';
@@ -19,6 +20,7 @@ void main() async {
     ChangeNotifierProvider(create: (context) => ProductNotifier()),
     ChangeNotifierProvider(create: (context) => CartProvider()),
     ChangeNotifierProvider(create: (context) => FavoritesNotifier()),
+    ChangeNotifierProvider(create: (context) => LoginNotifier()),
   ], child: const MyApp()));
 }
 
@@ -37,6 +39,7 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             theme: ThemeData(
               primarySwatch: Colors.blue,
+              scaffoldBackgroundColor: const Color(0xFFE2E2E2),
             ),
             home: MainScreen(),
           );

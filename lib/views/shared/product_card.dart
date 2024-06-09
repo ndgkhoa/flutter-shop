@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/controllers/favorites_provider.dart';
+import 'package:flutter_application_1/controllers/login_provider.dart';
 import 'package:flutter_application_1/views/shared/appstyle.dart';
 import 'package:flutter_application_1/views/shared/reuseable_text.dart';
+import 'package:flutter_application_1/views/ui/auth/login.dart';
 import 'package:flutter_application_1/views/ui/favorites.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -32,6 +34,7 @@ class _ProductCardState extends State<ProductCard> {
     var favoritesNotifier =
         Provider.of<FavoritesNotifier>(context, listen: true);
     favoritesNotifier.getFavorites();
+    var authNotifier = Provider.of<LoginNotifier>(context);
     bool selected = true;
     return Padding(
       padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 0),
@@ -62,31 +65,48 @@ class _ProductCardState extends State<ProductCard> {
                     )),
                   ),
                   Positioned(
-                    right: 10.w,
-                    top: 10.h,
-                    child: GestureDetector(
-                      onTap: () async {
-                        if (favoritesNotifier.ids.contains(widget.id)) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Favorites()));
-                        } else {
-                          favoritesNotifier.createFav({
-                            "id": widget.id,
-                            "name": widget.name,
-                            "category": widget.category,
-                            "price": widget.price,
-                            "imageUrl": widget.image
+                      right: 10.w,
+                      top: 10.h,
+                      child: Consumer<FavoritesNotifier>(
+                        builder: (context, favoritesNotifier, child) {
+                          return Consumer<LoginNotifier>(
+                              builder: (context, authNotifier, child) {
+                            return GestureDetector(
+                              onTap: () async {
+                                if (authNotifier.loggedIn == true) {
+                                  if (favoritesNotifier.ids
+                                      .contains(widget.id)) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const Favorites(),
+                                      ),
+                                    );
+                                  } else {
+                                    favoritesNotifier.createFav({
+                                      "id": widget.id,
+                                      "name": widget.name,
+                                      "category": widget.category,
+                                      "price": widget.price,
+                                      "imageUrl": widget.image,
+                                    });
+                                  }
+                                } else {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginPage()));
+                                }
+                                setState(() {});
+                              },
+                              child: favoritesNotifier.ids.contains(widget.id)
+                                  ? const Icon(AntDesign.heart)
+                                  : const Icon(AntDesign.hearto),
+                            );
                           });
-                        }
-                        setState(() {});
-                      },
-                      child: favoritesNotifier.ids.contains(widget.id)
-                          ? const Icon(AntDesign.heart)
-                          : const Icon(AntDesign.hearto),
-                    ),
-                  ),
+                        },
+                      )),
                 ],
               ),
               Padding(
