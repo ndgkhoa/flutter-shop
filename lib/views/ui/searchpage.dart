@@ -1,4 +1,4 @@
-import 'package:flutter_application_1/services/helper.dart';
+import 'package:flutter_application_1/services/products_helper.dart';
 import 'package:flutter_application_1/views/shared/export.dart';
 import 'package:flutter_application_1/views/shared/export_packages.dart';
 import 'package:flutter_application_1/views/ui/product_page.dart';

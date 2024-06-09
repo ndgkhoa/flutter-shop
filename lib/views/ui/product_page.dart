@@ -1,3 +1,5 @@
+import 'package:flutter_application_1/models/cart/cart_model.dart';
+import 'package:flutter_application_1/services/cart_helper.dart';
 import 'package:flutter_application_1/views/shared/export.dart';
 import 'package:flutter_application_1/views/shared/export_packages.dart';
 
@@ -19,7 +21,6 @@ class _ProductPageState extends State<ProductPage> {
         Provider.of<FavoritesNotifier>(context, listen: true);
     favoritesNotifier.getFavorites();
     var authNotifier = Provider.of<LoginNotifier>(context);
-    var cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       body: Consumer<ProductNotifier>(
         builder: (context, productNotifier, child) {
@@ -364,7 +365,9 @@ class _ProductPageState extends State<ProductPage> {
                 child: CheckoutButton(
                   onTap: () async {
                     if (authNotifier.loggedIn == true) {
-                      print('object');
+                      AddToCart model =
+                          AddToCart(cartItem: widget.sneakers.id, quantity: 1);
+                      CartHelper().addToCart(model);
                     } else {
                       Navigator.push(
                           context,

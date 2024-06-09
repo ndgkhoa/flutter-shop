@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/sneaker_model.dart';
-import 'package:flutter_application_1/services/helper.dart';
+import 'package:flutter_application_1/services/products_helper.dart';
 
 class ProductNotifier extends ChangeNotifier {
   int _activePage = 0;

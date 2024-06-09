@@ -1,6 +1,6 @@
 import 'package:flutter_application_1/models/auth/login_model.dart';
 import 'package:flutter_application_1/models/auth/signup_model.dart';
-import 'package:flutter_application_1/services/authhealper.dart';
+import 'package:flutter_application_1/services/auth_healper.dart';
 import 'package:flutter_application_1/views/shared/export_packages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
