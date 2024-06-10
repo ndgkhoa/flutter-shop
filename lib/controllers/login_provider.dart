@@ -5,7 +5,7 @@ import 'package:flutter_application_1/views/shared/export_packages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginNotifier extends ChangeNotifier {
-  bool _isObsecure = false;
+  bool _isObsecure = true;
   bool get isObsecure => _isObsecure;
   set isObsecure(bool newState) {
     _isObsecure = newState;

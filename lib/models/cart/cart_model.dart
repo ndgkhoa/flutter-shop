@@ -13,16 +13,19 @@ String addToCartToJson(AddToCart data) {
 class AddToCart {
   final String cartItem;
   final int quantity;
+  final String size;
 
   AddToCart({
     required this.cartItem,
     required this.quantity,
+    required this.size,
   });
 
   factory AddToCart.fromJson(Map<String, dynamic> json) {
     return AddToCart(
       cartItem: json['cartItem'],
       quantity: json['quantity'],
+      size: json['size'],
     );
   }
 
@@ -30,6 +33,7 @@ class AddToCart {
     return {
       'cartItem': cartItem,
       'quantity': quantity,
+      'size': size,
     };
   }
 }

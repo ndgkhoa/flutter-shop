@@ -39,7 +39,7 @@ class _ProductPageState extends State<ProductPage> {
                           GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
-                              productNotifier.shoeSizes.clear();
+                              productNotifier.selectedSize = "";
                             },
                             child: const Icon(AntDesign.close,
                                 color: Colors.black),
@@ -305,12 +305,9 @@ class _ProductPageState extends State<ProductPage> {
                                                         sizes['isSelected'],
                                                     onSelected: (newState) {
                                                       if (newState) {
-                                                        productNotifier.sizes
-                                                            .add(sizes['size']);
-                                                      } else {
-                                                        productNotifier.sizes
-                                                            .remove(
-                                                                sizes['size']);
+                                                        productNotifier
+                                                                .selectedSize =
+                                                            sizes['size'];
                                                       }
                                                       productNotifier
                                                           .toggleCheck(index);
@@ -364,15 +361,19 @@ class _ProductPageState extends State<ProductPage> {
                 alignment: Alignment.bottomCenter,
                 child: CheckoutButton(
                   onTap: () async {
-                    if (authNotifier.loggedIn == true) {
-                      AddToCart model =
-                          AddToCart(cartItem: widget.sneakers.id, quantity: 1);
-                      CartHelper().addToCart(model);
-                    } else {
+                    if (authNotifier.loggedIn == false) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const LoginPage()));
+                    } else if (productNotifier.selectedSize != "") {
+                      AddToCart model = AddToCart(
+                          cartItem: widget.sneakers.id,
+                          quantity: 1,
+                          size: productNotifier.selectedSize);
+                      productNotifier.selectedSize = "";
+                      CartHelper().addToCart(model);
+                      Navigator.pop(context);
                     }
                   },
                   label: "Add to Cart",

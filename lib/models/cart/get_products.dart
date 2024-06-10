@@ -20,23 +20,27 @@ class GetCart {
 class Product {
   ProductItem cartItem;
   int quantity;
+  String size;
   String id;
 
   Product({
     required this.cartItem,
     required this.quantity,
+    required this.size,
     required this.id,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         cartItem: ProductItem.fromJson(json["cartItem"]),
         quantity: json["quantity"],
+        size: json["size"],
         id: json["_id"],
       );
 
   Map<String, dynamic> toJson() => {
         "cartItem": cartItem.toJson(),
         "quantity": quantity,
+        "size": size,
         "_id": id,
       };
 }

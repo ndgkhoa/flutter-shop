@@ -79,7 +79,7 @@ class _CartPageState extends State<CartPage> {
                               return GestureDetector(
                                 onTap: () {
                                   cartProvider.setProductIndex = index;
-                                  print(cartProvider.productIndex);
+                                  cartProvider.checkout.insert(0, data);
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8),
@@ -139,6 +139,26 @@ class _CartPageState extends State<CartPage> {
                                                     width: 70,
                                                     height: 70,
                                                     fit: BoxFit.fill,
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  top: -4,
+                                                  left: -4,
+                                                  child: GestureDetector(
+                                                    onTap: () async {},
+                                                    child: SizedBox(
+                                                      height: 30.h,
+                                                      width: 30.w,
+                                                      child: Icon(
+                                                        cartProvider.productIndex ==
+                                                                index
+                                                            ? Feather
+                                                                .check_square
+                                                            : Feather.square,
+                                                        size: 30,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                                 Positioned(
@@ -229,24 +249,24 @@ class _CartPageState extends State<CartPage> {
                                                           FontWeight.w600,
                                                         ),
                                                       ),
-                                                      // const SizedBox(width: 40),
-                                                      // Text(
-                                                      //   "Size",
-                                                      //   style: appstyle(
-                                                      //     18,
-                                                      //     Colors.grey,
-                                                      //     FontWeight.w600,
-                                                      //   ),
-                                                      // ),
-                                                      // const SizedBox(width: 15),
-                                                      // Text(
-                                                      //   data['sizes'][0],
-                                                      //   style: appstyle(
-                                                      //     18,
-                                                      //     Colors.grey,
-                                                      //     FontWeight.w600,
-                                                      //   ),
-                                                      // ),
+                                                      const SizedBox(width: 40),
+                                                      Text(
+                                                        "Size",
+                                                        style: appstyle(
+                                                          18,
+                                                          Colors.grey,
+                                                          FontWeight.w600,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(width: 15),
+                                                      Text(
+                                                        data.size,
+                                                        style: appstyle(
+                                                          18,
+                                                          Colors.grey,
+                                                          FontWeight.w600,
+                                                        ),
+                                                      ),
                                                     ],
                                                   ),
                                                 ],
@@ -281,7 +301,7 @@ class _CartPageState extends State<CartPage> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          "0",
+                                                          "${data.quantity}",
                                                           style: appstyle(
                                                             16,
                                                             Colors.black,
@@ -317,10 +337,12 @@ class _CartPageState extends State<CartPage> {
                 ),
               ],
             ),
-            const Align(
-              alignment: Alignment.bottomCenter,
-              child: CheckoutButton(label: "Proceed to Checkout"),
-            )
+            cartProvider.checkout.isNotEmpty
+                ? const Align(
+                    alignment: Alignment.bottomCenter,
+                    child: CheckoutButton(label: "Proceed to checkout"),
+                  )
+                : const SizedBox.shrink()
           ],
         ),
       ),

@@ -5,7 +5,7 @@ import 'package:flutter_application_1/services/products_helper.dart';
 class ProductNotifier extends ChangeNotifier {
   int _activePage = 0;
   List<dynamic> _shoeSizes = [];
-  List<String> _sizes = [];
+  String _selectedSize = '';
 
   int get activePage => _activePage;
 
@@ -22,14 +22,17 @@ class ProductNotifier extends ChangeNotifier {
   }
 
   void toggleCheck(int index) {
-    shoeSizes[index]['isSelected'] = !shoeSizes[index]['isSelected'];
+    for (int i = 0; i < shoeSizes.length; i++) {
+      shoeSizes[i]['isSelected'] = false;
+    }
+    shoeSizes[index]['isSelected'] = true;
     notifyListeners();
   }
 
-  List<String> get sizes => _sizes;
+  String get selectedSize => _selectedSize;
 
-  set sizes(List<String> newSizes) {
-    _sizes = newSizes;
+  set selectedSize(String newSizes) {
+    _selectedSize = newSizes;
     notifyListeners();
   }
 
